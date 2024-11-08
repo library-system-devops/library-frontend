@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: 'http://35.210.246.177/api', // Backend API base URL (updated from localhost to VM IP)
+    withCredentials: true, // Include credentials (cookies, JWT tokens, etc.)
 });
 
 api.interceptors.request.use((config) => {
@@ -17,7 +18,7 @@ api.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             localStorage.removeItem('token');
-            window.location.href = '/login';
+            window.location.href = '/login'; // Redirect to login if unauthorized
         }
         return Promise.reject(error);
     }
